@@ -25,7 +25,7 @@ public class Controller implements Callback<List<Track>>{
 
         TracksAPI tracksAPI = retrofit.create(TracksAPI.class);
 
-        Call<List<Track>> call = TracksAPI.loadTracks();
+        Call<List<Track>> call = tracksAPI.loadTracks();
         call.enqueue(this);
 
     }
