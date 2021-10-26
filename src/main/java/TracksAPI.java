@@ -17,9 +17,10 @@ public interface TracksAPI {
     @DELETE("tracks/{id}")
     Call<ResponseBody> deleteTrack(@Path("id") String id);
 
+    @PUT("tracks")
+    Call<ResponseBody> updateTrack(@Body Track track);
+
     @POST("tracks")
     Call<Track> addTrack(@Body Track track);
-
-
 
 }

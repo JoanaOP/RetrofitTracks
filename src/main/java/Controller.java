@@ -13,7 +13,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 public class Controller{
 
     static final String BASE_URL = "http://localhost:8080/dsaApp/";
-    Track trackQueen = new Track("Bohemian rhapsody", "queen");
+    Track myTrack = new Track("Bohemian rhapsody", "queen");
 
     public void start() {
         Gson gson = new GsonBuilder()
@@ -28,9 +28,12 @@ public class Controller{
         TracksAPI tracksAPI = retrofit.create(TracksAPI.class);
 
         Call<List<Track>> call = tracksAPI.loadTracks();
-        Call<Track> call2 = tracksAPI.addTrack(trackQueen);
-        Call<Track> call3 = tracksAPI.getTrack(trackQueen.getId());
-        Call<ResponseBody> call4 = tracksAPI.deleteTrack(trackQueen.getId());
+        Call<Track> call2 = tracksAPI.addTrack(myTrack);
+        Call<Track> call3 = tracksAPI.getTrack(myTrack.getId());
+        Call<ResponseBody> call4 = tracksAPI.deleteTrack(myTrack.getId());
+        myTrack.setSinger("Queen");
+        myTrack.setTitle("Bohemian Rhapsody");
+        Call<ResponseBody> call5 = tracksAPI.updateTrack(myTrack);
 
 
         Callback<List<Track>> callback = new Callback<List<Track>>(){
@@ -99,10 +102,23 @@ public class Controller{
             }
         };
 
+        Callback<ResponseBody> callback5 = new Callback<ResponseBody>(){
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println("Track updated");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        };
+
         call.enqueue(callback);
         call2.enqueue(callback2);
         call3.enqueue(callback3);
         call4.enqueue(callback4);
+        call5.enqueue(callback5);
 
     }
 
