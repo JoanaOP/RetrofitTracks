@@ -19,6 +19,12 @@
             <artifactId>retrofit</artifactId>
             <version>2.9.0</version>
         </dependency>
+        <!-- https://mvnrepository.com/artifact/net.moznion/random-string -->
+        <dependency>
+            <groupId>net.moznion</groupId>
+            <artifactId>random-string</artifactId>
+            <version>1.1.0</version>
+        </dependency>
         <dependency>
             <groupId>com.squareup.retrofit2</groupId>
             <artifactId>converter-gson</artifactId>

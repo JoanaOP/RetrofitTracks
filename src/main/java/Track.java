@@ -3,6 +3,16 @@ public class Track {
     String title;
     String singer;
 
+    public Track() {
+        this.id = RandomUtils.getId();
+    }
+
+    public Track(String title, String singer) {
+        this();
+        this.setSinger(singer);
+        this.setTitle(title);
+    }
+
     public String getId() {
         return this.id;
     }
