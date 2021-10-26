@@ -3,6 +3,7 @@ import java.util.List;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 
+import okhttp3.ResponseBody;
 import retrofit2.Call;
 import retrofit2.Callback;
 import retrofit2.Response;
@@ -29,6 +30,7 @@ public class Controller{
         Call<List<Track>> call = tracksAPI.loadTracks();
         Call<Track> call2 = tracksAPI.addTrack(trackQueen);
         Call<Track> call3 = tracksAPI.getTrack(trackQueen.getId());
+        Call<ResponseBody> call4 = tracksAPI.deleteTrack(trackQueen.getId());
 
 
         Callback<List<Track>> callback = new Callback<List<Track>>(){
@@ -85,9 +87,22 @@ public class Controller{
             }
         };
 
+        Callback<ResponseBody> callback4 = new Callback<ResponseBody>() {
+            @Override
+            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
+                System.out.println("Track borrada");
+            }
+
+            @Override
+            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+                throwable.printStackTrace();
+            }
+        };
+
         call.enqueue(callback);
         call2.enqueue(callback2);
         call3.enqueue(callback3);
+        call4.enqueue(callback4);
 
     }
 
