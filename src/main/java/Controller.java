@@ -1,3 +1,4 @@
+import java.io.IOException;
 import java.util.List;
 
 import com.google.gson.Gson;
@@ -15,7 +16,7 @@ public class Controller{
     static final String BASE_URL = "http://localhost:8080/dsaApp/";
     Track myTrack = new Track("Bohemian rhapsody", "queen");
 
-    public void start() {
+    public void start() throws IOException {
         Gson gson = new GsonBuilder()
                 .setLenient()
                 .create();
@@ -60,11 +61,16 @@ public class Controller{
         Callback<Track> callback2 = new Callback<Track>() {
             @Override
             public void onResponse(Call<Track> call2, Response<Track> response) {
-                Track track = response.body();
-                System.out.println("Track afegida:");
-                System.out.println(track.getId());
-                System.out.println(track.getTitle());
-                System.out.println(track.getSinger());
+                if(response.isSuccessful()) {
+                    Track track = response.body();
+                    System.out.println("Track afegida:");
+                    System.out.println(track.getId());
+                    System.out.println(track.getTitle());
+                    System.out.println(track.getSinger());
+                }
+                else {
+                    System.out.println(response.errorBody());
+                }
 
             }
 
@@ -77,11 +83,17 @@ public class Controller{
         Callback<Track> callback3 = new Callback<Track>() {
             @Override
             public void onResponse(Call<Track> call3, Response<Track> response) {
-                Track track = response.body();
-                System.out.println("Track rebuda:");
-                System.out.println(track.getId());
-                System.out.println(track.getTitle());
-                System.out.println(track.getSinger());
+                if(response.isSuccessful()) {
+                    Track track = response.body();
+                    System.out.println("Track rebuda:");
+                    System.out.println(track.getId());
+                    System.out.println(track.getTitle());
+                    System.out.println(track.getSinger());
+                }
+                else {
+                    System.out.println(response.errorBody());
+                }
+
             }
 
             @Override
@@ -92,33 +104,49 @@ public class Controller{
 
         Callback<ResponseBody> callback4 = new Callback<ResponseBody>() {
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                System.out.println("Track borrada");
+            public void onResponse(Call<ResponseBody> call4, Response<ResponseBody> response) {
+                if(response.isSuccessful()) {
+                    System.out.println("Track borrada");
+                }
+                else {
+                    System.out.println(response.errorBody());
+                }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<ResponseBody> call4, Throwable throwable) {
                 throwable.printStackTrace();
             }
         };
 
         Callback<ResponseBody> callback5 = new Callback<ResponseBody>(){
             @Override
-            public void onResponse(Call<ResponseBody> call, Response<ResponseBody> response) {
-                System.out.println("Track updated");
+            public void onResponse(Call<ResponseBody> call5, Response<ResponseBody> response) {
+                if(response.isSuccessful()) {
+                    System.out.println("Track updated");
+                }
+                else {
+                    System.out.println(response.errorBody());
+                }
             }
 
             @Override
-            public void onFailure(Call<ResponseBody> call, Throwable throwable) {
+            public void onFailure(Call<ResponseBody> call5, Throwable throwable) {
                 throwable.printStackTrace();
             }
         };
 
         call.enqueue(callback);
+        System.in.read();
         call2.enqueue(callback2);
+        System.in.read();
         call3.enqueue(callback3);
-        call4.enqueue(callback4);
+        System.in.read();
         call5.enqueue(callback5);
+        System.in.read();
+        call4.enqueue(callback4);
+
+
 
     }
 
